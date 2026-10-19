@@ -18,10 +18,12 @@ cask "gloam" do
   app "Gloam.app"
 
   # Gloam's own removal: quits it (its screens restored), unregisters the login item, clears its
-  # settings. Plus its files, so uninstalling leaves nothing behind, --zap or not.
+  # settings. Best effort: macOS won't run a copy that was never opened (quarantine). Then its files,
+  # so uninstalling leaves nothing behind, --zap or not.
   uninstall early_script: {
-              executable: "#{appdir}/Gloam.app/Contents/MacOS/Gloam",
-              args:       ["--uninstall"],
+              executable:   "#{appdir}/Gloam.app/Contents/MacOS/Gloam",
+              args:         ["--uninstall"],
+              must_succeed: false,
             },
             quit:         "io.github.que-tin.Gloam",
             trash:        [
