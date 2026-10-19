@@ -13,18 +13,23 @@ cask "gloam" do
   end
 
   auto_updates true
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "Gloam.app"
 
-  uninstall quit: "io.github.que-tin.Gloam"
-
-  zap trash: [
-    "~/Library/Caches/io.github.que-tin.Gloam",
-    "~/Library/HTTPStorages/io.github.que-tin.Gloam",
-    "~/Library/HTTPStorages/io.github.que-tin.Gloam.binarycookies",
-    "~/Library/Preferences/io.github.que-tin.Gloam.plist",
-  ]
+  # Gloam's own removal: quits it (its screens restored), unregisters the login item, clears its
+  # settings. Plus its files, so uninstalling leaves nothing behind, --zap or not.
+  uninstall early_script: {
+              executable: "#{appdir}/Gloam.app/Contents/MacOS/Gloam",
+              args:       ["--uninstall"],
+            },
+            quit:         "io.github.que-tin.Gloam",
+            trash:        [
+              "~/Library/Caches/io.github.que-tin.Gloam",
+              "~/Library/HTTPStorages/io.github.que-tin.Gloam",
+              "~/Library/HTTPStorages/io.github.que-tin.Gloam.binarycookies",
+              "~/Library/Preferences/io.github.que-tin.Gloam.plist",
+            ]
 
   caveats <<~EOS
     Gloam isn't part of Apple's paid developer program, so the first time you open it macOS
