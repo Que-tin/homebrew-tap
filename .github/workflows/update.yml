@@ -19,6 +19,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          set -o pipefail  # a failed download must stop here, not be hashed as an empty file
           tag="$(gh release view --repo Que-tin/gloam --json tagName --jq .tagName)"
           version="${tag#v}"
           sha="$(curl -sSfL "https://github.com/Que-tin/gloam/releases/download/$tag/Gloam.dmg" | sha256sum | cut -d' ' -f1)"
