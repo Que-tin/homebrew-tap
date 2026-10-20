@@ -1,6 +1,6 @@
 cask "gloam" do
-  version "0.9.0"
-  sha256 "9ba115bf88f17f1bed6c100a671b2b0a0d287a8e8a31a8dc7fb879b62d6848cb"
+  version "0.10.0"
+  sha256 "051037e5e4532ef18365e35fbf7454063e692ce38460471edfe0758370e04db0"
 
   url "https://github.com/Que-tin/gloam/releases/download/v#{version}/Gloam.dmg"
   name "Gloam"
